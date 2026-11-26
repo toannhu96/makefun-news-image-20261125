@@ -15,7 +15,7 @@
  * - Deterministic: no network access, no randomness, no timestamps — the
  *   output is a byte-for-byte copy of the bundled asset.
  *
- * Run with Node 22.6+:
+ * Run with Node 22.7+ (loaded as ESM via syntax detection; 23.6+ needs no flag):
  *   node --experimental-strip-types main.ts
  */
 

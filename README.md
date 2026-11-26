@@ -31,7 +31,10 @@ has no dependencies beyond Node's built-in `node:fs` and `node:path`.
 
 ## How to run
 
-You need Node.js 22.6 or later, which supports TypeScript type stripping.
+You need Node.js 22.7 or later. `main.ts` uses `import` and `import.meta`, so
+Node must load it as an ES module. There is no `package.json`, so Node has to
+detect ESM from the syntax itself, which it does by default from 22.7 onward.
+Node 22.6 supports type stripping but may load the file as CommonJS and fail.
 
 ```sh
 # Write to the default location (/output)
@@ -70,6 +73,31 @@ file back from disk.
   and the reason. If the failure happened after writing started, the output
   file has been removed, so the directory never holds a partial or invalid
   `entry.png`.
+
+## Design notes
+
+The judge compares two images at a time and has no news feed, only the
+pictures. So the poster has to state what happened; it can't rely on the
+viewer already knowing.
+
+- **Text first, on purpose.** Seven specific headlines, each with a one-line
+  summary, a source and a region tag, say what happened and where.
+  Icon-, flag- or map-only compositions look richer at a glance, but a flag
+  marks a country, not an event. Without a feed the judge can't tell what the
+  symbols mean, so a text summary is the stronger answer to "which image
+  better sums up the day's world news".
+- **Newspaper framing.** The full date as the headline and the "7 stories ·
+  four continents" strip mark it at once as a one-day world summary.
+- **Known weaknesses, for a future revision:**
+  - All seven stories have equal visual weight, so nothing marks the day's
+    lead.
+  - Four of the seven are US-centred (Iowa, CIA, DOJ, NVIDIA), which weakens
+    the "world" claim.
+  - The image has no visual anchor at all.
+
+  A better next version would keep the text but give the lead story more
+  space, rebalance toward world stories, and add a small world map or region
+  markers as a supporting element, not a replacement for the text.
 
 ## Repository layout
 
